@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================================
+   CUSTOM CSS — Gauge, Breathing, Comfort Filters
+   ================================================ */
+
+:root {
+  --comfort-font-boost: 0px;
+  --comfort-line-spacing: 1.6;
+  --adaptation-font-boost: 0px;
+  --adaptation-line-spacing: 1.6;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #0f0f14;
+  color: #e5e5e5;
+  min-height: 100vh;
+}
+
+/* Adaptive font/line-height overrides */
+.adaptive-content {
+  font-size: calc(1rem + var(--adaptation-font-boost) + var(--comfort-font-boost));
+  line-height: var(--comfort-line-spacing);
+}
+
+.adaptation-line-spacing {
+  line-height: var(--adaptation-line-spacing) !important;
+}
+
+/* Comfort filters applied to main wrapper */
+.comfort-warm-filter {
+  filter: sepia(15%) brightness(95%);
+}
+.comfort-low-contrast {
+  filter: contrast(90%);
+}
+.comfort-warm-filter.comfort-low-contrast {
+  filter: sepia(15%) brightness(95%) contrast(90%);
+}
+.comfort-reduced-motion,
+.comfort-reduced-motion * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Score Gauge - Semicircle */
+.gauge-svg {
+  transform: rotate(-90deg);
+}
+.gauge-track {
+  fill: none;
+  stroke: #2a2a35;
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+.gauge-fill {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s ease, stroke 0.5s ease;
+}
+
+/* Breathing animation for break screen */
+@keyframes breatheCycle {
+  0% { transform: scale(0.5); opacity: 0.3; }
+  40% { transform: scale(1); opacity: 1; }    /* 4s inhale */
+  100% { transform: scale(0.5); opacity: 0.3; } /* 6s exhale */
+}
+.breathing-circle {
+  animation: breatheCycle 10s ease-in-out infinite;
+}
+
+/* Smart popup entrance */
+.popup-enter {
+  animation: slideUp 0.5s ease-out, fadeIn 0.5s ease-out;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a24;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a3a4a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5a5a6a;
+}
+
+/* Node graph tooltip */
+.graph-tooltip {
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Tab active indicator */
+.tab-active {
+  position: relative;
+}
+.tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #a855f7, #6366f1);
+  border-radius: 2px;
+}
+
+/* Glassmorphism cards */
+.glass-card {
+  background: rgba(26, 26, 38, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Pill button hover */
+.pill-button {
+  transition: all 0.2s ease;
+}
+.pill-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Dim badges for Drifting+ bands */
+.dim-badges .notification-badge {
+  opacity: 0.3;
+}
+
+/* Focus mode - hide secondary content */
+.focus-mode .secondary-content,
+.focus-mode .sidebar-widget {
+  display: none !important;
+}
+
+/* Override slider styling */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+input[type='range']::-webkit-slider-track {
+  height: 6px;
+  background: #2a2a3a;
+  border-radius: 3px;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #a855f7;
+  margin-top: -6px;
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+}
+input[type='range']::-moz-range-track {
+  height: 6px;
+  background: #2a2a3a;
+  border-radius: 3px;
+}
+input[type='range']::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #a855f7;
+  border: none;
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+}
