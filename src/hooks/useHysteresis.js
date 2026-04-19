@@ -75,7 +75,7 @@ export default function useHysteresis(score, sensitivityOffset, demoMode, snooze
       }
     }
 
-    // Start countdown for band transition if not already running for this band
+    // Start countdown for band transition if not already running FOR THIS SPECIFIC TARGET
     if (pendingBandRef.current !== targetBandKey) {
       pendingBandRef.current = targetBandKey;
       setPendingBand(targetBand);
@@ -101,10 +101,12 @@ export default function useHysteresis(score, sensitivityOffset, demoMode, snooze
       }, 1000);
     }
 
+    // Note: We deliberately EXCLUDE score from dependencies to prevent the interval 
+    // from being destroyed every second by the cleanup function.
     return () => {
-      if (countdownRef.current) clearInterval(countdownRef.current);
+      // No-op cleanup for score jitters
     };
-  }, [score, targetBand, confirmedBand, hysteresisDuration, sensitivityOffset, snoozed, manualOverrideBand]);
+  }, [targetBandKey, confirmedBand, hysteresisDuration, sensitivityOffset, snoozed, manualOverrideBand]);
 
   // Force revert all adaptations
   const forceRevert = useCallback(() => {

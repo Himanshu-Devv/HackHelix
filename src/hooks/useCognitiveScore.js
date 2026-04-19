@@ -40,6 +40,24 @@ export default function useCognitiveScore(signals, keyEvents, mouseEvents, weigh
 
   // State handles the Python backend logic score override
   const [modelScore, setModelScore] = useState(null);
+  
+  // Official stable score that only updates every 10 seconds
+  const [stableScore, setStableScore] = useState(sliderValue);
+
+  // 1. Sync Logic: Decide what the "live" raw score is
+  const rawScore = useSlider ? sliderValue : (modelScore !== null ? modelScore : computedScore);
+
+  // 2. Official 10s Pulse Effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStableScore(rawScore);
+    }, 10000);
+    
+    // Also update immediately if we switch into/out of slider mode
+    setStableScore(rawScore);
+
+    return () => clearInterval(interval);
+  }, [rawScore]);
 
   // Poll Python API
   useEffect(() => {
@@ -91,7 +109,7 @@ export default function useCognitiveScore(signals, keyEvents, mouseEvents, weigh
   }, [keyEvents, mouseEvents, useSlider]);
 
   return {
-    score: useSlider ? sliderValue : (modelScore !== null ? modelScore : computedScore),
+    score: stableScore,
     computedScore,
     sliderScore: sliderValue,
     activeSignalCount,
