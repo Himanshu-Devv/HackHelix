@@ -19,6 +19,7 @@ export default function useHysteresis(score, sensitivityOffset, demoMode, snooze
 
   // Get the target band from current score
   const targetBand = score !== null ? getBandFromScore(score, sensitivityOffset) : null;
+  const targetBandKey = targetBand?.key;
 
   useEffect(() => {
     // Manual override bypasses hysteresis
@@ -48,7 +49,6 @@ export default function useHysteresis(score, sensitivityOffset, demoMode, snooze
     }
 
     const currentBandKey = confirmedBand?.key || 'FOCUSED';
-    const targetBandKey = targetBand.key;
 
     // Check if target band is different from confirmed
     if (targetBandKey === currentBandKey) {

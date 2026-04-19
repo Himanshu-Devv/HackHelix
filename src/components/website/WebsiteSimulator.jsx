@@ -92,9 +92,20 @@ export default function WebsiteSimulator() {
           #website-simulator h2, 
           #website-simulator span, 
           #website-simulator li, 
-          #website-simulator a {
+          #website-simulator a,
+          #website-simulator button,
+          #website-simulator textarea {
             ${adaptStyles.fontSize ? `font-size: ${adaptStyles.fontSize} !important;` : ''}
             ${adaptStyles.lineHeight ? `line-height: ${adaptStyles.lineHeight} !important;` : ''}
+          }
+          #website-simulator button {
+            padding: 12px 24px !important;
+            border-radius: 12px !important;
+            min-height: 48px !important;
+          }
+          #website-simulator textarea {
+            padding: 16px !important;
+            min-height: 120px !important;
           }
         `}</style>
       )}
